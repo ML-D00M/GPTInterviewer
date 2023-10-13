@@ -15,10 +15,10 @@ from langchain.vectorstores import FAISS
 import nltk
 from prompts.prompts import templates
 # Audio
-from speech_recognition.openai_whisper import save_wav_file, transcribe
-from audio_recorder_streamlit import audio_recorder
-from aws.synthesize_speech import synthesize_speech
-from IPython.display import Audio
+# from speech_recognition.openai_whisper import save_wav_file, transcribe
+# from audio_recorder_streamlit import audio_recorder
+# from aws.synthesize_speech import synthesize_speech
+# from IPython.display import Audio
 
 def load_lottiefile(filepath: str):
 
@@ -36,7 +36,8 @@ with st.expander("""Why did I encounter errors when I tried to talk to the AI In
 
 st.markdown("""\n""")
 jd = st.text_area("""Please enter the job description here (If you don't have one, enter keywords, such as "communication" or "teamwork" instead): """)
-auto_play = st.checkbox("Let AI interviewer speak! (Please don't switch during the interview)")
+# auto_play = st.checkbox("Let AI interviewer speak! (Please don't switch during the interview)")
+
 #st.toast("4097 tokens is roughly equivalent to around 800 to 1000 words or 3 minutes of speech. Please keep your answer within this limit.")
 
 @dataclass
@@ -97,7 +98,8 @@ def initialize_session_state():
     if "guideline" not in st.session_state:
         llm = ChatOpenAI(
             model_name="gpt-3.5-turbo",
-            temperature=0.8, )
+            temperature=0.8,
+            api_key=st.secrets["credentials"]["openai_api_key"] )
         st.session_state.guideline = RetrievalQA.from_chain_type(
             llm=llm,
             chain_type_kwargs=st.session_state.chain_type_kwargs, chain_type='stuff',
@@ -107,7 +109,8 @@ def initialize_session_state():
     if "conversation" not in st.session_state:
         llm = ChatOpenAI(
         model_name = "gpt-3.5-turbo",
-        temperature = 0.8,)
+        temperature = 0.8,
+        api_key=st.secrets["credentials"]["openai_api_key"])
         PROMPT = PromptTemplate(
             input_variables=["history", "input"],
             template="""I want you to act as an interviewer strictly following the guideline in the current conversation.
@@ -132,13 +135,15 @@ def initialize_session_state():
     if "feedback" not in st.session_state:
         llm = ChatOpenAI(
         model_name = "gpt-3.5-turbo",
-        temperature = 0.5,)
+        temperature = 0.5,
+        api_key=st.secrets["credentials"]["openai_api_key"])
         st.session_state.feedback = ConversationChain(
             prompt=PromptTemplate(input_variables = ["history", "input"], template = templates.feedback_template),
             llm=llm,
             memory = st.session_state.memory,
         )
 
+# Deactivate the audio function temporarily
 def answer_call_back():
 
     '''callback function for answering user input'''
@@ -148,7 +153,7 @@ def answer_call_back():
         human_answer = st.session_state.answer
         # transcribe audio
         if voice:
-            save_wav_file("temp/audio.wav", human_answer)
+            # save_wav_file("temp/audio.wav", human_answer)
             try:
                 input = transcribe("temp/audio.wav")
                 # save human_answer to history
@@ -163,16 +168,16 @@ def answer_call_back():
         )
         # OpenAI answer and save to history
         llm_answer = st.session_state.conversation.run(input)
-        # speech synthesis and speak out
-        audio_file_path = synthesize_speech(llm_answer)
-        # create audio widget with autoplay
-        audio_widget = Audio(audio_file_path, autoplay=True)
-        # save audio data to history
+        # # speech synthesis and speak out
+        # audio_file_path = synthesize_speech(llm_answer)
+        # # create audio widget with autoplay
+        # audio_widget = Audio(audio_file_path, autoplay=True)
+        # # save audio data to history
         st.session_state.history.append(
             Message("ai", llm_answer)
         )
         st.session_state.token_count += cb.total_tokens
-        return audio_widget
+        return # audio_widget
 
 ### ————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
 if jd:
@@ -197,7 +202,7 @@ if jd:
         st.stop()
     else:
         with answer_placeholder:
-            voice: bool = st.checkbox("I would like to speak with AI Interviewer!")
+            # voice: bool = st.checkbox("I would like to speak with AI Interviewer!")
             if voice:
                 answer = audio_recorder(pause_threshold=2.5, sample_rate=44100)
                 #st.warning("An UnboundLocalError will occur if the microphone fails to record.")
@@ -209,13 +214,13 @@ if jd:
         with chat_placeholder:
             for answer in st.session_state.history:
                 if answer.origin == 'ai':
-                    if auto_play and audio:
-                        with st.chat_message("assistant"):
-                            st.write(answer.message)
-                            st.write(audio)
-                    else:
-                        with st.chat_message("assistant"):
-                            st.write(answer.message)
+                    # if auto_play and audio:
+                    #     with st.chat_message("assistant"):
+                    #         st.write(answer.message)
+                    #         st.write(audio)
+                    # else:
+                    with st.chat_message("assistant"):
+                        st.write(answer.message)
                 else:
                     with st.chat_message("user"):
                         st.write(answer.message)

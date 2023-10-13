@@ -87,7 +87,8 @@ def initialize_session_state_resume():
     if "resume_guideline" not in st.session_state:
         llm = ChatOpenAI(
         model_name = "gpt-3.5-turbo",
-        temperature = 0.5,)
+        temperature = 0.5,
+        api_key=st.secrets["credentials"]["openai_api_key"])
 
         st.session_state.resume_guideline = RetrievalQA.from_chain_type(
             llm=llm,
@@ -97,7 +98,8 @@ def initialize_session_state_resume():
     if "resume_screen" not in st.session_state:
         llm = ChatOpenAI(
             model_name="gpt-3.5-turbo",
-            temperature=0.7, )
+            temperature=0.7,
+            api_key=st.secrets["credentials"]["openai_api_key"] )
 
         PROMPT = PromptTemplate(
             input_variables=["history", "input"],
@@ -125,18 +127,20 @@ def initialize_session_state_resume():
     if "resume_feedback" not in st.session_state:
         llm = ChatOpenAI(
             model_name="gpt-3.5-turbo",
-            temperature=0.5,)
+            temperature=0.5,
+            api_key=st.secrets["credentials"]["openai_api_key"])
         st.session_state.resume_feedback = ConversationChain(
             prompt=PromptTemplate(input_variables=["history","input"], template=templates.feedback_template),
             llm=llm,
             memory=st.session_state.resume_memory,
         )
 
+# Deactivate the audio function temporarily
 def answer_call_back():
     with get_openai_callback() as cb:
         human_answer = st.session_state.answer
         if voice:
-            save_wav_file("temp/audio.wav", human_answer)
+            # save_wav_file("temp/audio.wav", human_answer)
             try:
                 input = transcribe("temp/audio.wav")
                 # save human_answer to history
@@ -150,16 +154,16 @@ def answer_call_back():
         )
         # OpenAI answer and save to history
         llm_answer = st.session_state.resume_screen.run(input)
-        # speech synthesis and speak out
-        audio_file_path = synthesize_speech(llm_answer)
-        # create audio widget with autoplay
-        audio_widget = Audio(audio_file_path, autoplay=True)
-        # save audio data to history
+        # # speech synthesis and speak out
+        # audio_file_path = synthesize_speech(llm_answer)
+        # # create audio widget with autoplay
+        # audio_widget = Audio(audio_file_path, autoplay=True)
+        # # save audio data to history
         st.session_state.resume_history.append(
             Message("ai", llm_answer)
         )
         st.session_state.token_count += cb.total_tokens
-        return audio_widget
+        return # audio_widget
 
 if position and resume:
     # intialize session state
@@ -183,7 +187,7 @@ if position and resume:
         st.stop()
     else:
         with answer_placeholder:
-            voice: bool = st.checkbox("I would like to speak with AI Interviewer!")
+            # voice: bool = st.checkbox("I would like to speak with AI Interviewer!")
             if voice:
                 answer = audio_recorder(pause_threshold=2, sample_rate=44100)
                 #st.warning("An UnboundLocalError will occur if the microphone fails to record.")
@@ -196,13 +200,13 @@ if position and resume:
         with chat_placeholder:
             for answer in st.session_state.resume_history:
                 if answer.origin == 'ai':
-                    if auto_play and audio:
-                        with st.chat_message("assistant"):
-                            st.write(answer.message)
-                            st.write(audio)
-                    else:
-                        with st.chat_message("assistant"):
-                            st.write(answer.message)
+                    # if auto_play and audio:
+                    #     with st.chat_message("assistant"):
+                    #         st.write(answer.message)
+                    #         st.write(audio)
+                    # else:
+                    with st.chat_message("assistant"):
+                        st.write(answer.message)
                 else:
                     with st.chat_message("user"):
                         st.write(answer.message)
