@@ -7,7 +7,7 @@ from PIL import Image
 im = Image.open("icon.png")
 st.set_page_config(page_title = "AI Interviewer", layout = "centered",page_icon=im)
 
-lan = st.selectbox("#### Language", ["English", "中文"])
+lan = st.selectbox("#### Language", ["English", "Русский"])
 
 if lan == "English":
     home_title = "AI Interviewer"
