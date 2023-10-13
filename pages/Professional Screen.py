@@ -77,7 +77,8 @@ def initialize_session_state_jd():
     if "jd_guideline" not in st.session_state:
         llm = ChatOpenAI(
         model_name = "gpt-3.5-turbo",
-        temperature = 0.8,)
+        temperature = 0.8,
+        api_key=st.secrets["credentials"]["openai_api_key"])
         st.session_state.jd_guideline = RetrievalQA.from_chain_type(
             llm=llm,
             chain_type_kwargs=st.session_state.jd_chain_type_kwargs, chain_type='stuff',
@@ -86,7 +87,8 @@ def initialize_session_state_jd():
     if "jd_screen" not in st.session_state:
         llm = ChatOpenAI(
             model_name="gpt-3.5-turbo",
-            temperature=0.8, )
+            temperature=0.8, 
+            api_key=st.secrets["credentials"]["openai_api_key"])
         PROMPT = PromptTemplate(
             input_variables=["history", "input"],
             template="""I want you to act as an interviewer strictly following the guideline in the current conversation.
@@ -112,7 +114,8 @@ def initialize_session_state_jd():
     if 'jd_feedback' not in st.session_state:
         llm = ChatOpenAI(
             model_name="gpt-3.5-turbo",
-            temperature=0.8, )
+            temperature=0.8, 
+            api_key=st.secrets["credentials"]["openai_api_key"])
         st.session_state.jd_feedback = ConversationChain(
             prompt=PromptTemplate(input_variables=["history", "input"], template=templates.feedback_template),
             llm=llm,
