@@ -1,33 +1,27 @@
 import streamlit as st
 
 def main():
-    st.title("Your App Title")
+    st.title("Mockup Implementation")
 
-    # Placeholder for the large circle (You can replace this with an image or another widget)
-    st.empty()
+    # Large Oval - Placeholder for Image/Video
+    st.image("/workspaces/GPTInterviewer/static/images/ai_icon.png", use_column_width=True)  # Placeholder for an image
+    
+    # Information Panel on the Right
+    col1, col2, col3 = st.beta_columns([1,2,1])
+    
+    with col2:
+        # Time
+        st.subheader("Time: 15:03")
+        
+        # Topics
+        st.write("**Topic 1**: User Research")
+        st.write("**Topic 2**: Prototyping")
+        st.write("**Topic 3**: Design Solution")
 
-    # Display the time
-    st.sidebar.text("Time: 15:03")
-
-    # Topics with their corresponding labels
-    topics = {
-        "Топик 1": "User Research",
-        "Топик 2": "Prototyping",
-        "Топик 3": "Design Solution",
-    }
-    for topic, label in topics.items():
-        st.sidebar.subheader(topic)
-        st.sidebar.text(label)
-
-    # "Leave the interview" and "Skip the question" buttons
-    if st.sidebar.button("Leave the interview"):
-        st.sidebar.text("You chose to leave the interview.")
-    if st.sidebar.button("Skip the question"):
-        st.sidebar.text("You chose to skip the question.")
-
-    # Placeholder for "CC" and "Repeat the question" (Assuming they are buttons or icons)
-    st.button("CC")
+    # Bottom buttons
     st.button("Repeat the question")
+    st.button("Leave the interview")
+    st.button("Skip the question")
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
