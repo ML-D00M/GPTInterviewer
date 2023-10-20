@@ -68,7 +68,7 @@ if lan == "English":
             - Choose your favorite interaction style (chat/voice)
             - Start introduce yourself and enjoy！ """)
         if st.button("Start Interview!"):
-            switch_page("Professional Screen copy")
+            switch_page("Professional Screen")
     if selected == 'Resume':
         st.info("""
         📚In this session, the AI Interviewer will review your resume and discuss your past experiences.
