@@ -11,12 +11,13 @@ def main():
         # Draw an oval using a placeholder and markdown trick
         st.markdown(
             """
-            <div style="background-color: #E0E0E0; height: 150px; border-radius: 75px;"></div>
+            <div style="background-color: #E0E0E0; height: 300px; border-radius: 150px;"></div>
             """, 
             unsafe_allow_html=True
         )
         
         # Buttons under the oval
+        st.write("")  # Adding some spacing
         if st.button("CC"):
             st.write("You pressed 'CC' button.")
         
@@ -27,6 +28,7 @@ def main():
     with col2:
         # Displaying Time
         st.write("**Time:** 15.03")
+        st.write("")  # Adding some spacing
 
         # Displaying Topics
         topics = [
@@ -41,6 +43,7 @@ def main():
             st.write("---")  # adding a horizontal line for separation
 
         # Displaying Buttons
+        st.write("")  # Adding some spacing
         if st.button("Leave the interview"):
             st.write("You pressed 'Leave the interview' button.")
         
