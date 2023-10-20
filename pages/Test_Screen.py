@@ -3,52 +3,119 @@ import streamlit as st
 def main():
     st.title("Interview UI")
 
-    # Create two columns for the UI layout
-    col1, col2 = st.columns(2)
+    # Your HTML code
+    html_code = """
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #1A1A1A;
+                color: white;
+                margin: 0;
+            }
+            .container {
+                display: flex;
+                justify-content: space-between;
+                padding: 50px;
+                height: 100vh;
+            }
+            .left, .right {
+                flex: 0.45;
+            }
+            .left ul {
+                list-style-type: none;
+                padding: 0;
+            }
+            .left li {
+                background-color: #333;
+                margin-bottom: 10px;
+                padding: 10px;
+                border-radius: 5px;
+            }
+            .right-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: space-between;
+                height: 100%;
+            }
+            .circle {
+                background-color: #333;
+                border-radius: 50%;
+                width: 300px;
+                height: 300px;
+            }
+            .buttons {
+                display: flex;
+                gap: 10px;
+            }
+            button {
+                padding: 10px;
+                background-color: #555;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+            .topics {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                align-items: center;
+                padding: 10px;
+            }
+            .topic {
+                padding: 10px;
+                background-color: #333;
+                width: 150px;
+                text-align: center;
+                border-radius: 5px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="left">
+                <ul>
+                    <li>Homepage</li>
+                    <li>Behavioral Screen</li>
+                    <li>Professional Screen</li>
+                    <li>Resume Screen</li>
+                    <li>Test Screen</li>
+                </ul>
+            </div>
+            <div class="right">
+                <div class="right-content">
+                    <h1>Interview UI</h1>
+                    <div class="circle"></div>
+                    <div class="topics">
+                        <div class="topic">Topic 1</div>
+                        <div class="topic">Topic 2</div>
+                        <div class="topic">Topic 3</div>
+                    </div>
+                    <div class="buttons">
+                        <button>Leave the interview</button>
+                        <button>Skip the question</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    </html>
+    """
 
-    # First Column (Left)
-    with col1:
-        # Draw an oval using a placeholder and markdown trick
-        st.markdown(
-            """
-            <div style="background-color: #E0E0E0; height: 300px; border-radius: 150px;"></div>
-            """, 
-            unsafe_allow_html=True
-        )
-        
-        # Buttons under the oval
-        st.write("")  # Adding some spacing
-        if st.button("CC"):
-            st.write("You pressed 'CC' button.")
-        
-        if st.button("Repeat the question"):
-            st.write("You pressed 'Repeat the question' button.")
+    # # Your CSS code
+    # css_code = """
+    # <style>
+    #     /* Place the CSS code here */
+    # </style>
+    # """
 
-    # Second Column (Right)
-    with col2:
-        # Displaying Time
-        st.write("**Time:** 15.03")
-        st.write("")  # Adding some spacing
-
-        # Displaying Topics
-        topics = [
-            ("Topic 1", "User Research"),
-            ("Topic 2", "Prototyping"),
-            ("Topic 3", "Design Solution")
-        ]
-
-        for topic_name, topic_description in topics:
-            st.write(f"**{topic_name}**")
-            st.write(topic_description)
-            st.write("---")  # adding a horizontal line for separation
-
-        # Displaying Buttons
-        st.write("")  # Adding some spacing
-        if st.button("Leave the interview"):
-            st.write("You pressed 'Leave the interview' button.")
-        
-        if st.button("Skip the question"):
-            st.write("You pressed 'Skip the question' button.")
+    # Display HTML and CSS in Streamlit
+    # st.markdown(css_code, unsafe_allow_html=True)
+    st.markdown(html_code, unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
