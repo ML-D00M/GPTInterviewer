@@ -27,7 +27,7 @@ def main():
     if st.button("Repeat the Question"):
         st.write("Repeating the question...")
     
-    col1, col2, col3 = st.beta_columns(3)
+    col1, col2, col3 = st.columns(3)
     
     with col2:
         if st.button("Leave the Interview"):
