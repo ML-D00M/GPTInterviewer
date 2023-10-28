@@ -1,0 +1,72 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100vh;
+    padding: 50px;
+}
+
+.circle {
+    width: 400px;
+    height: 400px;
+    background-color: #e0e0e0;
+    border-radius: 50%;
+}
+
+.sidebar {
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.time {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.topic {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.topic.active {
+    background-color: #ccc;
+}
+
+.buttons {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ccc;
+    cursor: pointer;
+}
+
+.subtitle {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    font-size: 18px;
+}
+
+.central-oval {
+    width: 150px; /* Adjust this value for desired width */
+    height: 200px; /* Adjust this value for desired height */
+    background-color: #FFFFFF; /* White color for the oval */
+    border-radius: 50%; /* Makes the shape an oval */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center the oval */
+    z-index: 1; /* Make sure it appears on top of the gray circle */
+}
